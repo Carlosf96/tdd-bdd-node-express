@@ -1,0 +1,30 @@
+{
+  "name": "testingstuff",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/www",
+  "scripts": {
+    "test": "jest",
+    "nodemon" : "nodemon"
+  },
+  "author": "Carlos Francisco Franco Roque",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "jest": "^24.9.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.8",
+    "nyc": "^14.1.1"
+  }
+}
