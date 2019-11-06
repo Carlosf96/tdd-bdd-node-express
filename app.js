@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
-const db = require('./config/keys').mongoURI;
+const db = process.env.MONGO_URI
 //const usersRouter = require('./routes/user.route');
 
 const app = express();
