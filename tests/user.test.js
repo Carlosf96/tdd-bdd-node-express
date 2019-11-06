@@ -27,17 +27,17 @@ describe("api/users", () => {
           age: 2
         });
         await user.save();
-        const res = await request(app).get("/api/users" + user.__id);
+        const res = await request(app).get("/api/users/" + user._id);
         expect(res.status).to.equal(200);
+        console.log(res.body);
         expect(res.body).to.have.property("firstName", user.firstName);
-        done();
       });
       it("Should return 400 if an invalid object id is passed", async () => {
         const res = await request(app).get("/api/users/1");
         expect(res.status).to.equal(400);
       });
       it("Should return 404 if an valid object id is passed but does not exist", async () => {
-        const res = await request(app).get("/api/users/1111111111111");
+        const res = await request(app).get("/api/users/111111111111");
         expect(res.status).to.equal(404);
       });
     });

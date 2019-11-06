@@ -27,7 +27,7 @@ app.use((req, res, next)=>{
 app.use((err, req, res, next)=>{
   res.locals.message = err.message;
 
-  res.status(500);
+  res.status(err.status || 500);
   res.send(err);
 });
 
