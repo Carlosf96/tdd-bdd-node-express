@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
     required: true,
-    minlength: 4,
-    maxlength: 12,
+    minlength: 1,
+    maxlength: 8,
   },
-  email: {
+  lastName: {
     type: String,
     required: true,
-    minlength: 4,
-    maxlength: 12,
+    minlength: 1,
+    maxlength: 8,
     unique: true,
   },
-  gender: {
-    type: String,
+  age: {
+    type: Number,
+    minimum: 1,
     required: true,
   },
 });
