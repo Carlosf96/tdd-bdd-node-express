@@ -17,7 +17,7 @@ function onError(error) {
   const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 
   switch (error.code) { 
-    case "EACESS":
+    case "EACCESS":
       console.error(bind + " requires elevated privliges");
       process.exit(1);
       break;
@@ -31,7 +31,7 @@ function onError(error) {
 }
 
 function onListening() {
-  const addy = server.address();
-  const bind = typeof addy === "string" ? "Pipe " + addy : "Port " + addy.port;
+  // const addy = server.address();
+  // const bind = typeof addy === "string" ? "Pipe " + addy : "Port " + addy.port;
   console.log(`test server listening on port ${port}`);
 }
