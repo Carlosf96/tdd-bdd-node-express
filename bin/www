@@ -1,14 +1,30 @@
 #!/usr/bin/env node
 var app = require('../app');
 var http = require('http');
-
-const port = process.env.PORT || 5000;
+require('dotenv').config();
+const port = normalizePort(3000);
 
 const server = http.createServer(app);
-
+app.set("port", port)
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
 
 function onError(error) { 
   if (error.syscall !== "listen") { 
@@ -23,15 +39,16 @@ function onError(error) {
       break;
     case "EADDRINUSE":
       console.error(bind + " is already in use");
-      process.exit();
+      process.exit(1);
       break;
     default:
+      console.log('logging default error')
       throw error;
   }
 }
 
 function onListening() {
-  // const addy = server.address();
-  // const bind = typeof addy === "string" ? "Pipe " + addy : "Port " + addy.port;
+  const addy = server.address();
+  const bind = typeof addy === "string" ? "Pipe " + addy : "Port " + addy.port;
   console.log(`test server listening on port ${port}`);
 }

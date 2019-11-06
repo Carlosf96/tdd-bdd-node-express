@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
+require('dotenv').config();
 const db = process.env.MONGO_URI;
-//const usersRouter = require('./routes/user.route');
+const usersRouter = require('./routes/User.route');
 
 const app = express();
 app.use(express.json());
@@ -18,7 +19,7 @@ mongoose.connect(db, {
   console.log(err);
   process.exit();
 });
-//app.use('/api/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 app.use((req, res, next)=>{
   next(createError(404));
@@ -26,7 +27,7 @@ app.use((req, res, next)=>{
 app.use((err, req, res, next)=>{
   res.locals.message = err.message;
 
-  res.status(err.message || 500);
+  res.status(500);
   res.send(err);
 });
 
