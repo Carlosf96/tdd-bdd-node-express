@@ -13,6 +13,7 @@ mongoose.connect(db, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false ,
 })
 .then(()=>console.log('Connected to Mongodb Cloud Cluster'))
 .catch((err)=>{
