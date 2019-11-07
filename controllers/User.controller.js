@@ -3,7 +3,10 @@ const { User } = require('../models/user.model');
 
 module.exports.getAllUsers = async (req, res) => {
   let users = await User.find({});
-  return res.send(users);
+  if (!users) {
+    return res.send('No users').status(404);
+  }
+  return res.send(users).status(200);
 };
 module.exports.getUser = async (req, res) => {
   let id = req.params.id;
@@ -20,6 +23,13 @@ module.exports.getUser = async (req, res) => {
 
 module.exports.createUser = async (req, res) => {
   let { firstName, lastName, age } = req.body;
+  if (age < 0) {
+    return res.send('Age must be greater than 0').status(403)
+  }
+  console.log(age,'this is the age object');
+  if (!firstName) {
+    return res.send('First Name is required').status(403)
+  }
   let user = new User({
     firstName,
     lastName,
