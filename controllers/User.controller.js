@@ -4,13 +4,12 @@ const { User } = require('../models/user.model');
 module.exports.getAllUsers = async (req, res) => {
   let users = await User.find({});
   if (!users) {
-    return res.send('No users').status(404);
+    return res.status(404).send('No users');
   }
-  return res.send(users).status(200);
+  return res.status(200).send(users);
 };
 module.exports.getUser = async (req, res) => {
-  let id = req.params.id;
-  console.log(req.params);
+  let { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send('Invalid ObjectId');
   }
@@ -18,34 +17,42 @@ module.exports.getUser = async (req, res) => {
   if (!user) {
     return res.status(404).send('User Not Found');
   }
-  return res.send(user);
+  return res.status(200).send(user);
 };
 
 module.exports.createUser = async (req, res) => {
   let { firstName, lastName, age } = req.body;
   if (age < 0) {
-    return res.send('Age must be greater than 0').status(403)
+    return res.status(403).send('Age must be greater than 0');
   }
-  console.log(age,'this is the age object');
+  console.log(firstName, lastName, age, 'this is the age object');
   if (!firstName) {
-    return res.send('First Name is required').status(403)
+    return res.status(403).send('First Name is required');
   }
   let user = new User({
     firstName,
     lastName,
     age
   });
-  await user.save();
-  return res.send(user);
+  await user
+    .save()
+    .then(user => {
+      res.status(201).send(user);
+    })
+    .catch(err => {
+      res.status(500).send('Unable to save user');
+    });
 };
 module.exports.updateUser = async (req, res) => {
   let { id } = req.params;
 
-  let user = await User.findOneAndUpdate(id, req.body, { new: true} );
-  if (!user) {
-    res.send('User not found').status(404);
-  }
-  res.send(user);
+  await User.findOneAndUpdate(id, req.body)
+    .then(user => {
+      res.send(user).status(200);
+    })
+    .catch(err => {
+      res.send('User does not exist').status(404);
+    });
 };
 
 module.exports.deleteUser = async (req, res) => {

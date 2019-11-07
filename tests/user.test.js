@@ -43,7 +43,7 @@ describe('api/users', () => {
     });
   });
   describe('POST /', () => {
-    it('Should return user when the all request body is valid', async () => {
+    it('Should return 201 and a user when the all request body is valid', async () => {
       const res = await request(app)
         .post('/api/users/')
         .send({
@@ -51,10 +51,11 @@ describe('api/users', () => {
           lastName: 'last',
           age: 1
         });
-      expect(res.status).to.equal(200);
+      expect(res.status).to.equal(201);
       expect(res.body).to.have.property('_id');
       expect(res.body.age).to.be.gt(0);
-      expect(res.body).to.have.property('firstName', 'first');
+      expect(res.body).to.have.property('firstName');
+      expect(res.body).to.have.property('lastName');
     });
     
     // add more tests to validate request body accordingly eg, make sure name is more than 1 character etc
@@ -78,7 +79,7 @@ describe('api/users', () => {
         });
 
       expect(res.status).to.equal(200);
-      expect(res.body).to.have.property('age', 2);
+      expect(res.body).to.have.property('firstName');
     });
   });
 
