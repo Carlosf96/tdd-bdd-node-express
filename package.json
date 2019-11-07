@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node bin/www",
     "test": "mocha tests/* --timeout 10000 --exit",
+    "coverage": "nyc --reporter=html --reporter=text mocha tests/* --exit --timeout 15000",
     "dev": "nodemon -r dotenv/config bin/www"
   },
   "author": "Carlos Francisco Franco Roque",
